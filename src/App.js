@@ -12,6 +12,7 @@ import ProfileCard from "./ProfileCard";
 import Upload from "./pages/Upload";
 import lgn from "./pages/lgn";
 import Signup from "./pages/Signup";
+import Edit from "./pages/Edit";
 import StickyHeader from 'react-sticky-header';
 
 import Navbar from "./components/Navbar";
@@ -28,15 +29,16 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/Profile" exact component={ProfileCard} />
             <Route path="/Upload" exact component={Upload} />
-            <Route path="/recipes" exact component={Recipes} />
-            <Route path="/friends" exact component={Frnd} />
+            <Route path="/Events" exact component={Recipes} />
+            <Route path="/Checkedin" exact component={Frnd} />
            <Route path="/login" exact component={lgn} />
+           <Route path="/edit" exact component={Edit} />
            <Route path="/Signup" exact component={Signup} />
-                        <Route path="/recipes/:id" component={SingleRecipe} />
+                        <Route path="/Events/:pid" component={SingleRecipe} />
                                     <Route component={Default} />
           </Switch>
           </Scroll>
-<div className="footer "><p>Made by Siddharth</p></div>
+<div className="footer "><p>CHECK ME IN</p></div>
         </main>
       </Router>
     );

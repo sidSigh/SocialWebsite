@@ -1,44 +1,71 @@
 import React, { Component } from "react";
 import { recipeData } from "../tempDetails";
 import { Link } from "react-router-dom";
+import SingEvnt from '../components/SingEvnt';
 export default class SingleRecipe extends Component {
-  constructor(props) {
-    super(props);
-    const id = this.props.match.params.id;
+  state = {
+    Events: [],
+    Gid: '',
+    fun:''
 
-    this.state = {
-      recipe: recipeData,
-      // recipe: {},
-      id: id,
-      loading: false
-    };
-  }
+  };
 
-  async componentDidMount() {
-    const url = `https://www.food2fork.com/api/get?key=${
-      process.env.REACT_APP_API_KEY
-    }&rId=${this.state.id}`;
-    try {
-      const response = await fetch(url);
-      const responseData = await response.json();
-      this.setState({
-        recipe: responseData.recipe,
-        loading: false
+
+  componentDidMount = () => {
+    const { pid } = this.props.match.params;
+    this.state.Gid = pid;
+
+    console.log({ pid });
+
+    const data = { pid: { pid }.pid };
+
+    console.log(data);
+
+    fetch('http://localhost:5000/single', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        this.setState({
+          Events: responseJson,
+          fun: () => {
+            alert('Event Added');
+
+            fetch('http://localhost:5000/checkin', {
+              method: 'post',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                id: responseJson[0].id,
+                name:responseJson[0].name,
+                image:responseJson[0].image,
+                details:responseJson[0].details
+
+
+              })
+            })
+              .then(msg => {
+                alert("success!");
+              })
+          }
+
+        })
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   render() {
-    const {
-      image_url,
-      publisher,
-      publisher_url,
-      source_url,
-      title,
-      ingredients
-    } = this.state.recipe;
+
+    const { id, name, image } = this.props;
+
+    // console.log(id + '----')
 
     if (this.state.loading) {
       return (
@@ -46,7 +73,7 @@ export default class SingleRecipe extends Component {
           <div className="row">
             <div className="col-10 mx-auto col-md-6 my-3 ">
               <h2 className="text-uppercase text-orange text-center">
-                loading recipe....
+                loading Event....
               </h2>
             </div>
           </div>
@@ -55,57 +82,24 @@ export default class SingleRecipe extends Component {
     }
 
     return (
-      <div className="container my-5">
-        <div className="row">
-          <div className="col-10 mx-auto col-md-6 my-3">
-            <Link
-              to="/recipes"
-              className="btn btn-warning mb-5 text-capitalize"
-            >
-              back to Event list
-            </Link>
-            <img
-              src={image_url}
-              className="d-block w-100"
-              style={{ maxHeight: "30rem" }}
-              alt="recipe"
-            />
-          </div>
-          {/* details */}
-          <div className="col-10 mx-auto col-md-6 my-3">
-            <h6 className="text-uppercase">{title}</h6>
-            <h6 className="text-warning text-capitalize text-slanted">
-              provided by {publisher}
-            </h6>
-            <a
-              href={publisher_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary mt-2 text-capitalize"
-            >
-             visit profile
-            </a>
-            <a
-              href={source_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-success mt-2 mx-2 text-capitalize"
-            >
-              Check in
-            </a>
-            <ul className="list-group mt-4">
-              <h2 className="mt-3 mb-4">Event Details</h2>
-              {ingredients.map((item, index) => {
-                return (
-                  <li key={index} className="list-group-item text-slanted">
-                    {item}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-      </div>
+      <div>
+        {
+          this.state.Events.map((user, i) => {
+            return (
+              <SingEvnt key={i}
+
+                id={this.state.Events[i].id}
+                name={this.state.Events[i].name}
+                image={this.state.Events[i].image}
+                details={this.state.Events[i].details}
+                fn={this.state.fun}
+
+          />);
+          })
+
+        } </div>
+
     );
   }
 }
+

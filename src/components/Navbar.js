@@ -25,7 +25,7 @@ export default function Navbar() {
       <div className="collapse navbar-collapse show ml-sm-5">
         <ul className="navbar-nav">
                   <li className="nav-item active">
-            <Link className="nav-link" to="/recipes">
+            <Link className="nav-link" to="/Events">
               Events
             </Link>
           </li>
@@ -38,7 +38,9 @@ export default function Navbar() {
             <Link className="nav-link" to="/Upload">
               Add Event
             </Link>
+          
           </li>
+          
         </ul>
       </div>
     </nav>

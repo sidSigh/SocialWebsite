@@ -8,6 +8,11 @@ import { FaUserTimes } from 'react-icons/fa';
 
 class ProfileCard extends React.Component {
   constructor(props){
+
+    if(sessionStorage.getItem("email")==null){
+      window.location.href = "http://localhost:3000/login";
+
+    }
     super(props)
     this.state = {
       friends: 0,
@@ -21,8 +26,12 @@ class ProfileCard extends React.Component {
         
       }
     }
+
+    
   }
-  
+  logout(e){
+    alert("logout");
+  }
   follow(e){
     e.preventDefault()
     let currentIcon = this.state.icon
@@ -46,6 +55,11 @@ class ProfileCard extends React.Component {
         text={this.state.text}
         follow={this.follow.bind(this)}
         friends={this.state.friends}
+        logout={()=>{
+
+          sessionStorage.clear();
+          window.location.href = "http://localhost:3000/login";
+        }}
       />
     )
   }

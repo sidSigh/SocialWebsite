@@ -1,41 +1,30 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import RatingStar from "./RatingStar";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaCheckCircle } from 'react-icons/fa';
 import "../App.css";
 
 // import "./App.css";
-export default class Recipie extends Component {
-  render() {
-    const {
-      image,
-      name,
-      id
-    } = this.props.recipe;
-    return (
-      <div className="col-10 mx-auto col-md-6 col-lg-4 my-3">
-        <div className="card" style={{ height: "100%" }}>
-          <img
-            src={image}
-            style={{ height: "14rem" }}
-            className="img-card-top"
-            alt=""
-          />
-          <div className="card-body text-capitalize">
-            <h6>{name}</h6>
-           
-          </div>
-          <div className="card-footer">
-            <Link
-              to={`/recipes/${id}`}
-              className="btn btn-primary text-capitalize"
-            >
-              More Info
-            </Link>
-           
-                       <RatingStar/>
-          </div>
-        </div>
-      </div>
-    );
-  }
+const Recipe = (props) => {
+	
+	const {name, image, id}=props;
+	const url = "/Events/" + id ; 
+	console.log(url)
+	
+	
+return	(<div className="Profilecard shadow-2">
+		<img  className="Profileimage" alt='Sid' src={`${image}`} width="250" height="250" />
+
+		<h3>{name}</h3>
+		<div className="btn">
+		<a href={url} className='btn btn-warning mx-2 text-capitalize'> View more &nbsp;<FontAwesomeIcon icon="info" /></a> 
+		{/* <a className="btn btn-info mx-2 text-capitalize" href='#' >Check-In &nbsp;<FaCheckCircle /></a>  */}
+		</div>
+
+		 			</div>
+		);
 }
+
+
+export default Recipe;

@@ -364,6 +364,27 @@ display: inline;
   width:500px;
   height:100px;
 }
+.sng{
+  display: flex;
+  margin-top:50px;
+  height: auto;
+  width:100%;
+  
+}
+.flt{
+margin-left: 30%;
+margin-top:5%;
+text-align: center;
+font-family: "Numans";
+}
+
+.btn{
+  margin-top:20px;
+}
+.SB{
+  margin: 20px;
+ 
+}
 /*.prvw{
   display: flex;
 }
